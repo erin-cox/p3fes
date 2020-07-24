@@ -168,7 +168,7 @@
         { "name":        "Nidhoggr", "level": 69, "arcana":       "Aeon" },
         { "name":          "Ananta", "level": 75, "arcana":       "Aeon" },
         { "name":         "Atavaka", "level": 80, "arcana":       "Aeon" },
-        { "name":        "Metatron", "level": 87, "arcana":       "Aeon", "max": true, "special": true},
+        { "name":        "Metatron", "level": 87, "arcana":       "Aeon", "max": true, "special": true}
     ],
     "arcana": [
         "Fool",

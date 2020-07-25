@@ -1,11 +1,40 @@
+import json
+
+with open("../data/data.json") as f:
+    data = json.load(f)
+
+personae_by_name = { item["name"]: item for item in data["personae"] }
+personae_by_arcana = get_personae_by_arcana(data)
 
 
+def get_personae_by_arcana(data):
+    """
+    Returns the persona data as a dictionary from arcanas to lists of
+    personas. Within each arcana, the personas are listed in increasing
+    order of level.
+    """
 
-personae_by_name = None
+    personae_by_arcana = { arcana: [] for arcana in data["arcana"]}
+    for persona in data["personae"]:
+        arcana = persona["arcana"]
+        personae_by_arcana[arcana].push(persona)
+    return personae_by_arcana
+
+
 normal_spread = data["normal_spread"]
 triple_spread = data["triple_spread"]
 
 fusion_table
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -60,9 +89,22 @@ def get_triple_spread_recipes(arcana):
 
 def normal_spread(persona_1, persona_2):
     """
-    Fuses the two supplied personas (specified by name). Returns None if
-    no fusion is possible.
+    Fuses the two supplied personas. Returns None if no fusion is possible.
     """
+
+    arcana_1, arcana_2 = persona_1["arcana"], persona_2["arcana"]
+    resultant_arcana = ARCANA[arcana_1][arcana_2]
+    resultant_level = (persona_1["level"] + persona_2["level"]) // 2 + 1
+    i = 0
+    while True:
+        # Attempts to 
+        try:
+            persona = PERSONAE_BY_ARCANA[RESULTANT_ARCANA][i]
+            if persona["level"] < resultant_level:
+                continue
+        except:
+            persona = None
+        persona = 3
 
 
 def triple_spread(persona_1, persona_2, persona_3):
@@ -71,3 +113,7 @@ def triple_spread(persona_1, persona_2, persona_3):
     third persona as the persona with the highest current level.
     Returns None if no fusion is possible.
     """
+
+    pass
+
+

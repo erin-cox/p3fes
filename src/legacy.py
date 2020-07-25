@@ -1,33 +1,4 @@
-import json
-
-class Data:
-    def __init__(self, path):
-        with open(path) as f:
-            data = json.load(f)
-        
-        personae = data["personae"]
-        self.personae_by_name = { item["name"]: item for item in personae }
-        self.personae_by_arcana = self.get_personae_by_arcana(personae)
-        self.arcana = data["arcana"]
-        self.arcana = { item: i for i, item in enumerate(data["arcana"]) }
-    
-    
-    def get_personae_by_arcana(self, data):
-        personae_by_arcana = {}
-        for item in data:
-            arcana = item["arcana"]
-            if arcana not in personae_by_arcana:
-                personae_by_arcana[arcana] = []
-            else:
-                personae_by_arcana[arcana].append(item)
-        return personae_by_arcana
-
-
-
-
-
-
-
+# Shitty code to generate all combinations from the fusion table.
 
 FUSION_TABLE = [
     [ 0,   5,  8, 10,  7,  9,  2,  4,  6,  2,  8, 12,  1, 11,  5,  9, 18, 21, 10,  3, 17, 13],
@@ -83,21 +54,32 @@ meow = [
 
 
 
-
-
-def normal_spread_arcana(arcana1, arcana2):
-    pass
-
-def normal_spread(persona_1, persona_2):
-    arcana = 3
-    level = persona1["level"] + persona2["level"] // 2 + 1
-
-
-
-
 if __name__ == "__main__":
-    normal = {}
-    triple = {}
-    for i, s in enumerate(meow):
-        table[s] = []
-        for i in 
+    normal = { nya: [] for nya in meow }
+    Q = len(FUSION_TABLE)
+    for q in range(len(meow)):
+        for y in range(Q):
+            for x in range(Q):
+                if y > x: continue
+                if q == FUSION_TABLE[y][x]:
+                    normal[meow[q]].append((meow[y], meow[x]))
+
+
+
+    triple = { nya: [] for nya in meow }
+    for q in range(len(meow)):
+        for y in range(Q):
+            for x in range(Q):
+                if x > y: continue
+                # Iterate over each double
+                if q == FUSION_TABLE[y][x]:
+                    for a,b in normal[meow[y]]:
+                        triple[meow[q]].append((a, b, meow[x]))
+                    for a,b in normal[meow[x]]:
+                        triple[meow[q]].append((a, b, meow[y]))
+    for key, thing in triple.items():
+        asdf = list(dict.fromkeys(thing))
+        triple[key] = asdf
+    import json
+    with open("../data/k.json", "w+") as f:
+        json.dump({"normal_spread": normal, "triple_spread": triple}, f)
